@@ -45,6 +45,7 @@
     width: 60px;
     height: 60px;
     object-fit: contain;
+    mix-blend-mode: multiply;
   }
   li > div {
     padding: 0 8px;

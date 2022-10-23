@@ -1,9 +1,10 @@
 <template>
   <main>
     <article v-if="recipeInfo.title">
-      <h3>Basic:</h3>
+      <a style="display: block; text-align: center; padding: 12px 0;" href="/">back to ingredients</a>
       <img :src="recipeInfo.image" />
       <h1>{{ recipeInfo.title }}</h1>
+      <h3>Summary:</h3>
       <p v-html="recipeInfo.summary"></p>
       
       <h3>Diets / Intolerances:</h3>

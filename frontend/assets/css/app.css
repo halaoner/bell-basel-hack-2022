@@ -1,10 +1,37 @@
+:root {
+  --main-red: #CE272D;
+  --neutral-10: #222222;
+  --neutral-11: #646464;
+  --neutral-14: #D3D3D3;
+}
 html {
   font-family: 'Roboto', system-ui, sans-serif;
 }
+body {
+  background: #FBF9F5;
+  color: var(--neutral-10);
+}
 a {
+  color: initial;
   text-decoration: none;
   font-weight: 700;
 }
 h2 {
   font-weight: 700;
+  text-transform: uppercase;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: .7em;
+  margin-top: 24px;
+}
+input:focus {
+  outline-color: var(--main-red);
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+svg {
+  fill: var(--neutral-14);
 }

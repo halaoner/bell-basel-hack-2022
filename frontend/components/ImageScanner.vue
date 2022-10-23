@@ -1,19 +1,14 @@
 <template>
-  <div>
+  <div class="image-scanner">
     <div id="camera">
       <!-- <video ref="video" id="video" :width="videoWidth + 'px'" :height="videoHeight + 'px'" autoplay/> -->
       <video ref="video" id="video" autoplay/>
     </div>
-    <div>
-      <button id="snap" @click="capture()">Snap Photo</button>
-      <!-- <input type="file" accept="image/*" capture/> -->
-      <!-- <input type="file" id="imageFile" capture="camera" accept="image/*" /> -->
+    <div id="snap">
+      <img src="/Search-Icon.svg" alt="Scan Ingredient" @click="capture()" />
+      <p @click="$emit('scanner-closed')">close scanner</p>
     </div>
-    <h1>Canvas</h1>
-    <!-- <canvas ref="canvas" id="canvas" width="100%" height="100%"/> -->
     <canvas ref="canvas" id="canvas" />
-    <!-- <div>{{ captures }}</div>
-    <img v-for="img in captures" :key="img" :src="img"> -->
   </div>
 </template>
 
@@ -52,6 +47,7 @@ export default {
 },
   methods: {
     capture() {
+      this.$emit('scan-started');
       this.canvas = this.$refs.canvas;
       this.canvas.width = this.video.clientWidth;
       this.canvas.height = this.video.clientHeight;
@@ -112,18 +108,42 @@ export default {
 }
 </script>
 
-<style>
-    #camera {
-      height: calc(100vh - 240px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #video {
-      background-color: #000000;
-      max-width: 100%;
-    }
-    #canvas {
-        display: none;
-    }
+<style scoped>
+
+  div.image-scanner {
+    --modal-height: calc(100vh - 134px - 80px);
+    max-height: var(--modal-height);
+    position: relative;
+  }
+  div#snap {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+  }
+  div#snap p {
+    font-weight: 400;
+    width: 100%;
+    text-align: center;
+    margin: 12px 0;
+    color: #fff;
+  }
+  #camera {
+    max-width: 100%;
+    height: var(--modal-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--neutral-10);
+  }
+  #video {
+    background-color: #000000;
+    max-width: 100%;
+  }
+  #canvas {
+      display: none;
+  }
 </style>

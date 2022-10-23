@@ -1,6 +1,13 @@
 <template>
   <section>
-    <h2>Selected Ingredients</h2>
+    <div v-if="ingredients.length > 0">
+      <h2>Your Ingredients</h2>
+      <p style="text-align: center;" @click="$emit('ingredients-cleared')">clear ingrediants</p>
+    </div>
+    <div v-else>
+      <h2>HUNGRY?</h2>
+      <p style="text-align: center;">Tell me what you have!</p>
+    </div>
     <ul v-if="ingredients.length > 0" class="selected-ingredients-list">
       <!-- <li v-for="{name, image, id} in ingredients" :key="id">
         <img :src="imgBaseUrl + image" :alt="name" :title="name"/>
@@ -13,10 +20,6 @@
         </template>
       </Ingredient-list-item>
     </ul>
-    <div v-else>
-      <h3>Start scanning your fridge!</h3>
-      <p>As soon as you have added some ingredients, you will be able to get personalized recipes.</p>
-    </div>
   </section>
 </template>
 
@@ -41,11 +44,8 @@
 </script>
 
 <style scoped>
-  h2 {
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: .7em;
-    margin-top: 24px;
+  ul {
+    padding: 0;
   }
   h3 {
     font-size: 24px;
