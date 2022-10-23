@@ -2,8 +2,8 @@
 The architecture is based on microservices pattern to isolate each service from each other and develop them independently.
 
 Below architecture diagrams describe multiple use cases:
-- UC 1: User inserts goods manually
-- UC 2: User upload an image of goods
+- UC 1: User inserts goods manually/ scans
+- UC 2: User uploads an image of goods
 
 ### Use case 1: User inserts goods manually
 ![solution-architecture-uc-1](doc/architecture/bell-solution-architecture-UC-1.png)
