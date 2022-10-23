@@ -4,6 +4,7 @@
       <a href="/profile">Profile</a>
     </main-header>
     <main>
+      <image-scanner @image-scanned="addScannedImage"></image-scanner>
     <selected-ingredients :ingredients="selectedIngredients" @remove-ingredient="removeIngredient"></selected-ingredients>
     <article>
       <h2>Add Ingredients</h2>
@@ -23,12 +24,11 @@
           </template>
         </Ingredient-list-item>
       </ul>
+      <p>{{ recipeSearchIngredients }}</p>
       <button class="find-recipe" @click="fetchRecipes(recipeSearchIngredients)">Search Recipes</button>
     </article>
     <article>
       <h2>Recipes</h2>
-      <!-- <input id="recipeSearch" v-model.lazy="recipeSearchTerm" type="text" name="recipeSearch">
-      <button @click="fetchRecipes(recipeSearchTerm)">Fetch Recipe from Input</button> -->
       <ul v-if="recipeData">
         <li v-for="{title, image, id} in recipeData" :key="id">
           <a :href="`/recipes/${id}`">
@@ -67,24 +67,36 @@ export default {
       this.fetchIngredient(newVal);
     }
   },
-  mounted() {
-    this.fetchAws();
-  },
   methods: {
-    fetchAws() {
-      // fetch('https://ok4mjcl5pdk47rbbpfh43f5wme0tigur.lambda-url.us-east-1.on.aws/', {
-      fetch('https://nd4wdoqnsbdfdrmbtn7feda5si0phmun.lambda-url.eu-central-1.on.aws/', {
-        method: 'POST',
-        test: 'this is a test string'
-      })
-      .then( response => response.json())
-      .then ( data => {
-        console.log(data);
-      })
-      .catch( error => {
-        console.error(error);
-      })
-    },
+    // uploadToCloudinary() {
+    //   const url = "https://api.cloudinary.com/v1_1/fc-wiesendangen/image/upload";
+
+    //   fetch(url, {
+    //     method: "POST",
+    //     body: 
+    //   })
+    //   .then((response) => {
+    //     return response.text();
+    //   })
+    //   .then((data) => {
+    //     document.getElementById("data").innerHTML += data;
+    //   });
+    // },
+
+    // fetchAws() {
+    //   // fetch('https://ok4mjcl5pdk47rbbpfh43f5wme0tigur.lambda-url.us-east-1.on.aws/', {
+    //   fetch('https://nd4wdoqnsbdfdrmbtn7feda5si0phmun.lambda-url.eu-central-1.on.aws/', {
+    //     method: 'POST',
+    //     test: 'this is a test string'
+    //   })
+    //   .then( response => response.json())
+    //   .then ( data => {
+    //     console.log(data);
+    //   })
+    //   .catch( error => {
+    //     console.error(error);
+    //   })
+    // },
     fetchIngredient(query) {
       const baseUrl = 'https://api.spoonacular.com/food/ingredients/search';
       
@@ -106,13 +118,33 @@ export default {
       fetch(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${this.apiKey}&ingredients=${ingredientList}`)
       .then( res => res.json() )
       .then( data => {
-        console.log(data.results);
-        this.recipeData = data.results;
+        console.log(data);
+        this.recipeData = data;
       });
     },
     selectIngredient(ingredientObject) {
+      if ( this.selectedIngredients.find(ingredient => ingredient.id === ingredientObject.id ) ) {
+        this.ingredientSearchTerm = '';
+        console.log('That ingredient is already selected');
+      }
       this.selectedIngredients.push(ingredientObject);
       this.ingredientSearchTerm = '';
+    },
+    addScannedImage(tag) {
+      console.log(tag);
+      const baseUrl = 'https://api.spoonacular.com/food/ingredients/search';
+        
+      fetch(`${baseUrl}?apiKey=${this.apiKey}&query=${tag}`)
+      .then( res => res.json() )
+      .then( data => {
+        if ( data.results.length > 0 ) {
+          this.selectIngredient(data.results[0])
+        } else {
+          console.log(data);
+        }
+      });
+      
+      
     }
   },
 }

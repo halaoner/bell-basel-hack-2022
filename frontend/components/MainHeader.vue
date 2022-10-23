@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Bell Food Assistant</h1>
+    <h1>Bell Cook Buddy</h1>
     <slot></slot>
   </header>
 </template>
