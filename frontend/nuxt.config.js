@@ -1,4 +1,7 @@
 export default {
+  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
+  ssr: false,
+
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
@@ -33,13 +36,32 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+    '@vueuse/nuxt',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: [
+    // https://go.nuxtjs.dev/pwa
+    '@nuxtjs/pwa',
+  ],
+
+  // PWA module configuration: https://go.nuxtjs.dev/pwa
+  pwa: {
+    manifest: {
+      lang: 'en',
+    },
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    extend(config) {
+      config.module.rules.push({
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      })
+    },
+  },
 
   publicRuntimeConfig: {
     publicApiKey: process.env.VUE_APP_SPOONACULAR_API_KEY,
